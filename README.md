@@ -14,6 +14,7 @@ npm add okxos
 
 ```ts
 import { apiKey, apiSecret, apiPass, projectID } from "./secret.json";
+import { SDK } from "okxos";
 
 const client = SDK({
   apiKey,
