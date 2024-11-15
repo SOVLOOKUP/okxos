@@ -1,0 +1,48 @@
+{
+  "name": "okxos",
+  "version": "0.0.1",
+  "description": "okxos SDK",
+  "homepage": "https://www.okx.com/web3/build/docs/waas/okx-waas-what-is-waas",
+  "repository": {
+    "url": "https://github.com/SOVLOOKUP/okxos"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "blockchain",
+    "okx"
+  ],
+  "author": "sovlookup",
+  "dependencies": {
+    "@originjs/crypto-js-wasm": "^1.1.1",
+    "ky": "^1.7.2",
+    "qs": "^6.13.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.17",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "clean": true,
+    "dts": true,
+    "treeshake": true,
+    "shims": true,
+    "minify": true
+  },
+  "files": [
+    "dist/*"
+  ]
+}
