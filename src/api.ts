@@ -79,6 +79,92 @@ const SupportedChains = z.object({
   ),
 });
 
+// token ==========================================================================================================
+const TokenAddress = z
+  .enum(["", "FBRC-20", "BRC-20", "Runes", "SRC-20"])
+  .or(z.string());
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-get-current-pricelist
+const CurrentPrice = z.object({
+  endpoint: z.literal("wallet/token/current-price"),
+  method: z.literal("POST"),
+  params: z
+    .array(
+      z.object({
+        chainIndex: z.nativeEnum(Chain),
+        tokenAddress: TokenAddress,
+      })
+    )
+    .min(1)
+    .max(100),
+  response: z.array(
+    z.object({
+      price: z.string(),
+      time: z.string(),
+      chainIndex: z.nativeEnum(Chain),
+      tokenAddress: TokenAddress,
+    })
+  ),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-token-detail
+const TokenDetail = z.object({
+  endpoint: z.literal("wallet/token/token-detail"),
+  method: z.literal("GET"),
+  params: z.object({
+    chainIndex: z.nativeEnum(Chain),
+    tokenAddress: TokenAddress,
+  }),
+  response: z.array(
+    z.object({
+      logoUrl: z.string().url(),
+      officialWebsite: z.string().url(),
+      tokenAddress: TokenAddress,
+      chainIndex: z.nativeEnum(Chain),
+      chainName: z.string(),
+      symbol: z.string(),
+      maxSupply: z.string(),
+      totalSupply: z.string(),
+      volume24h: z.string(),
+      marketCap: z.string(),
+      socialUrls: z.object({
+        twitter: z.array(z.string().url()).optional(),
+        facebook: z.array(z.string().url()).optional(),
+        reddit: z.array(z.string().url()).optional(),
+        messageboard: z.array(z.string().url()).optional(),
+        chat: z.array(z.string().url()).optional(),
+        github: z.array(z.string().url()).optional(),
+        whitepaper: z.array(z.string().url()).optional(),
+        announcement: z.array(z.string().url()).optional(),
+      })
+    })
+  ),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-get-historical-price
+const HistoricalPrice = z.object({
+  endpoint: z.literal("wallet/token/historical-price"),
+  method: z.literal("GET"),
+  params: z.object({
+    chainIndex: z.nativeEnum(Chain),
+    tokenAddress: TokenAddress.optional(),
+    limit: z.number().max(200).optional(),
+    cursor: z.number().optional(),
+    begin: z.string().optional(),
+    end: z.string().optional(),
+    period: z.enum(["1m", "5m", "30m", "1h", "1d"]).optional(),
+  }),
+  response: z.object({
+    cursor: z.string(),
+    prices: z.array(
+      z.object({
+        price: z.string(),
+        time: z.string(),
+      })
+    ),
+  }),
+});
+
 // webhook ==========================================================================================================
 
 const webhookDetail = z.object({
@@ -123,7 +209,15 @@ const WebhookQuerySub = z.object({
 });
 
 // ==========================================================================================================
-const all = [SupportedChains, WebhookSub, WebhookUnsub, WebhookQuerySub];
+const all = [
+  CurrentPrice,
+  HistoricalPrice,
+  TokenDetail,
+  SupportedChains,
+  WebhookSub,
+  WebhookUnsub,
+  WebhookQuerySub,
+];
 
 const allInput = all.map((i) => i.pick({ endpoint: true, params: true }));
 export const api = z.discriminatedUnion("endpoint", [all.pop()!, ...all]);

@@ -2,7 +2,7 @@
 
 Type Full OKX OS SDK
 
-https://www.okx.com/zh-hans/web3/build/docs/waas/okx-waas-what-is-waas
+https://www.okx.com/web3/build/docs/waas/okx-waas-what-is-waas
 
 ## install
 
