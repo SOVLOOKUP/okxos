@@ -1,3 +1,28 @@
 # OKX OS SDK
 
+Type Full OKX OS SDK
+
 https://www.okx.com/zh-hans/web3/build/docs/waas/okx-waas-what-is-waas
+
+## install
+
+```
+npm add okxos
+```
+
+## usage
+
+```ts
+import { apiKey, apiSecret, apiPass, projectID } from "./secret.json";
+
+const client = SDK({
+  apiKey,
+  apiSecret,
+  apiPass,
+  projectID,
+});
+
+await client({
+  endpoint: "wallet/chain/supported-chains",
+})
+```
