@@ -27,3 +27,5 @@ export const SDK = (apiConfig: APIConfig) => {
     });
   };
 };
+
+// console.log(Object.keys(em))
