@@ -798,11 +798,58 @@ const AccountDetail = z.object({
     .length(1),
 });
 
-// todo https://www.okx.com/web3/build/docs/waas/walletapi-api-intro-transaction-api
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-order-id-transaction-list
+const Orders = z.object({
+  endpoint: z.literal("wallet/post-transaction/orders"),
+  method: z.literal("GET"),
+  params: z.object({
+    address: z.string().optional(),
+    accountId: z.string().optional(),
+    chainIndex: z.string().optional(),
+    txStatus: z.enum(["1", "2", "3"]).optional(),
+    orderId: z.string().optional(),
+    cursor: z.string().optional(),
+    limit: z.number().max(100).optional(),
+  }),
+  response: z.array(
+    z.object({
+      chainIndex: z.string(),
+      address: z.string(),
+      accountId: z.string(),
+      orderId: z.string(),
+      txStatus: z.enum(["1", "2", "3"]),
+      txHash: z.string(),
+      limit: z.number().max(100),
+    })
+  ),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-send-transaction
+const BroadcastTransaction = z.object({
+  endpoint: z.literal("wallet/pre-transaction/broadcast-transaction"),
+  method: z.literal("POST"),
+  params: z.object({
+    chainIndex: z.string(),
+    signedTx: z.string(),
+    accountId: z.string().optional(),
+    address: z.string().optional(),
+  }),
+  response: z.array(
+    z.object({
+      orderId: z.string(),
+    })
+  ),
+});
+
+// todo https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-intro-pre-transaction
+
+
 
 // ==========================================================================================================
 
 const all = [
+  Orders,
+  BroadcastTransaction,
   CreateWallet,
   UpdateWallet,
   DeleteWallet,
