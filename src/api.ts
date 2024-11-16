@@ -443,7 +443,7 @@ const TokenBalances = z.object({
 });
 
 // tx history ==========================================================================================================
-// https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-transactions-by-address
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-transactions-by-address
 const AddressTransactions = z.object({
   endpoint: z.literal("wallet/post-transaction/transactions-by-address"),
   method: z.literal("GET"),
@@ -493,7 +493,7 @@ const AddressTransactions = z.object({
     .length(1),
 });
 
-// https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-transaction-list
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-transaction-list
 const Transactions = z.object({
   endpoint: z.literal("wallet/post-transaction/transactions"),
   method: z.literal("GET"),
@@ -544,7 +544,7 @@ const Transactions = z.object({
     .length(1),
 });
 
-// https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-transaction-detail-by-txhash
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-transaction-detail-by-txhash
 const TransactionsDetail = z.object({
   endpoint: z.literal("wallet/post-transaction/transaction-detail-by-txhash"),
   method: z.literal("GET"),
@@ -618,7 +618,7 @@ const TransactionsDetail = z.object({
     .length(1),
 });
 
-// https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-inscription-transaction-detail-by-txhash
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-inscription-transaction-detail-by-txhash
 const InscriptionTransactionsDetail = z.object({
   endpoint: z.literal(
     "wallet/post-transaction/inscription-transaction-detail-by-txhash"
@@ -701,10 +701,113 @@ const WebhookQuerySub = z.object({
   response: z.array(webhookDetail),
 });
 
+// wallet ==========================================================================================================
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-create-wallet-account
+const CreateWallet = z.object({
+  endpoint: z.literal("wallet/account/create-wallet-account"),
+  method: z.literal("POST"),
+  params: z.object({
+    addresses: z.array(
+      z.object({
+        chainIndex: z.nativeEnum(Chain),
+        address: z.string(),
+      })
+    ),
+  }),
+  response: z.array(
+    z.object({
+      accountId: z.string(),
+    })
+  ),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-update-wallet-account
+const UpdateWallet = z.object({
+  endpoint: z.literal("wallet/account/update-wallet-account"),
+  method: z.literal("POST"),
+  params: z.object({
+    accountId: z.string(),
+    updateType: z.enum(["add", "delete"]),
+    addresses: z.array(
+      z.object({
+        chainIndex: z.nativeEnum(Chain),
+        address: z.string(),
+      })
+    ),
+  }),
+  response: z.array(z.never()),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-delete-account
+const DeleteWallet = z.object({
+  endpoint: z.literal("wallet/account/delete-account"),
+  method: z.literal("POST"),
+  params: z.object({
+    accountId: z.string(),
+  }),
+  response: z.array(z.never()),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-accounts
+const Accounts = z.object({
+  endpoint: z.literal("wallet/account/accounts"),
+  method: z.literal("GET"),
+  params: z.object({
+    limit: z.string().optional(),
+    cursor: z.string().optional(),
+  }),
+  response: z
+    .array(
+      z.object({
+        cursor: z.string(),
+        accounts: z.array(
+          z.object({
+            accountId: z.string(),
+            accountType: z.enum(["1", "0"]),
+          })
+        ),
+      })
+    )
+    .length(1),
+});
+
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-account-detail
+const AccountDetail = z.object({
+  endpoint: z.literal("wallet/account/account-detail"),
+  method: z.literal("GET"),
+  params: z.object({
+    accountId: z.string(),
+    chainIndex: z.string().optional(),
+    limit: z.string().optional(),
+    cursor: z.string().optional(),
+  }),
+  response: z
+    .array(
+      z.object({
+        cursor: z.string(),
+        addresses: z.array(
+          z.object({
+            chainIndex: z.string(),
+            address: z.string(),
+            remark: z.string(),
+          })
+        ),
+      })
+    )
+    .length(1),
+});
+
+// todo https://www.okx.com/web3/build/docs/waas/walletapi-api-intro-transaction-api
+
 // ==========================================================================================================
-// todo https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-intro-account-api
-// todo https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-intro-transaction-api
+
 const all = [
+  CreateWallet,
+  UpdateWallet,
+  DeleteWallet,
+  Accounts,
+  AccountDetail,
   AddressTokenBalances,
   AddressTotalValue,
   Utxos,
