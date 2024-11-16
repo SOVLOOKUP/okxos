@@ -841,9 +841,22 @@ const BroadcastTransaction = z.object({
   ),
 });
 
-// todo https://www.okx.com/zh-hans/web3/build/docs/waas/walletapi-api-intro-pre-transaction
-
-
+// https://www.okx.com/web3/build/docs/waas/walletapi-api-validate-address
+const ValidateAddress = z.object({
+  endpoint: z.literal("wallet/pre-transaction/validate-address"),
+  method: z.literal("GET"),
+  params: z.object({
+    chainIndex: z.string(),
+    address: z.string(),
+  }),
+  response: z.array(
+    z.object({
+      addressType: z.enum(["0", "1", "2"]),
+      hitBlacklist: z.boolean(),
+      tag: z.string(),
+    })
+  ).length(1),
+});
 
 // ==========================================================================================================
 
@@ -875,6 +888,7 @@ const all = [
   WebhookSub,
   WebhookUnsub,
   WebhookQuerySub,
+  ValidateAddress,
 ];
 
 const allInput = all.map((i) => i.pick({ endpoint: true, params: true }));
