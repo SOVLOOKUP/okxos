@@ -31,6 +31,11 @@ await client({
 ## Support Endpoints
 ```
 [
+  'wallet/account/account-detail',
+  'wallet/account/accounts',
+  'wallet/account/create-wallet-account',
+  'wallet/account/delete-account',
+  'wallet/account/update-wallet-account',
   'wallet/asset/all-token-balances-by-address',
   'wallet/asset/token-balances',
   'wallet/asset/token-balances-by-address',
@@ -39,9 +44,12 @@ await client({
   'wallet/asset/wallet-all-token-balances',
   'wallet/chain/supported-chains',
   'wallet/post-transaction/inscription-transaction-detail-by-txhash',
+  'wallet/post-transaction/orders',
   'wallet/post-transaction/transaction-detail-by-txhash',
   'wallet/post-transaction/transactions',
   'wallet/post-transaction/transactions-by-address',
+  'wallet/pre-transaction/broadcast-transaction',
+  'wallet/pre-transaction/validate-address',
   'wallet/security/approvals',
   'wallet/token/current-price',
   'wallet/token/historical-price',
