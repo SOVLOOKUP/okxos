@@ -756,7 +756,7 @@ const Accounts = z.object({
   params: z.object({
     limit: z.string().optional(),
     cursor: z.string().optional(),
-  }),
+  }).optional(),
   response: z
     .array(
       z.object({
@@ -810,7 +810,7 @@ const Orders = z.object({
     orderId: z.string().optional(),
     cursor: z.string().optional(),
     limit: z.number().max(100).optional(),
-  }),
+  }).optional(),
   response: z.array(
     z.object({
       chainIndex: z.string(),
