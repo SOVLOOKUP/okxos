@@ -891,6 +891,37 @@ const all = [
   ValidateAddress,
 ];
 
+export {
+  Orders,
+  BroadcastTransaction,
+  CreateWallet,
+  UpdateWallet,
+  DeleteWallet,
+  Accounts,
+  AccountDetail,
+  AddressTokenBalances,
+  AddressTotalValue,
+  Utxos,
+  UtxosDetail,
+  AddressAllToken,
+  Approvals,
+  TotalValue,
+  WalletAllToken,
+  Transactions,
+  TokenBalances,
+  TransactionsDetail,
+  AddressTransactions,
+  InscriptionTransactionsDetail,
+  CurrentPrice,
+  HistoricalPrice,
+  TokenDetail,
+  SupportedChains,
+  WebhookSub,
+  WebhookUnsub,
+  WebhookQuerySub,
+  ValidateAddress,
+}
+
 const allInput = all.map((i) => i.pick({ endpoint: true, params: true }));
 export const api = z.discriminatedUnion("endpoint", [all.pop()!, ...all]);
 export const apiInput = z.discriminatedUnion("endpoint", [

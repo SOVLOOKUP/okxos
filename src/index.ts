@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { Chain, api, apiInput } from "./api";
+import { api, apiInput } from "./api";
 import { APIConfig, OKXClient } from "./client";
-export { Chain };
+export * from "./api";
 const em: { [key: string]: "GET" | "POST" } = {};
 
 api._def.options.map((i) => {
