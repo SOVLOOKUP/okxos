@@ -8,12 +8,12 @@ const baseURL = "https://www.okx.com";
 const prePath = "/api/v5/";
 
 interface FailRes {
-  code: 1;
+  code: "1";
   msg: string;
 }
 
 interface SuccRes<T> {
-  code: 0;
+  code: "0";
   msg: string;
   data: T;
 }
