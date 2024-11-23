@@ -7,7 +7,7 @@ https://www.okx.com/web3/build/docs/waas/okx-waas-what-is-waas
 ## Install
 
 ```
-npm add okxos
+npm add okxos zod
 ```
 
 ## Usage
