@@ -7,12 +7,12 @@ await SHA256.loadWasm();
 const baseURL = "https://www.okx.com";
 const prePath = "/api/v5/";
 
-interface FailRes {
+export interface FailRes {
   code: "1";
   msg: string;
 }
 
-interface SuccRes<T> {
+export interface SuccRes<T> {
   code: "0";
   msg: string;
   data: T;
