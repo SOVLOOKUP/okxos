@@ -68,7 +68,7 @@ export enum Chain {
 const SupportedChains = z.object({
   endpoint: z.literal("wallet/chain/supported-chains"),
   method: z.literal("GET"),
-  params: z.undefined().optional(),
+  params: z.object({}).optional(),
   response: z.array(
     z.object({
       name: z.string(),
@@ -697,7 +697,7 @@ const WebhookUnsub = z.object({
 const WebhookQuerySub = z.object({
   endpoint: z.literal("wallet/webhook/subscriptions"),
   method: z.literal("GET"),
-  params: z.undefined().optional(),
+  params: z.object({}).optional(),
   response: z.array(webhookDetail),
 });
 
