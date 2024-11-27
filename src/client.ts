@@ -4,7 +4,7 @@ import { stringify } from "qs";
 const { HmacSHA256, SHA256, enc } = crypto["default"] as typeof crypto;
 await SHA256.loadWasm();
 
-const baseURL = "https://www.okx.com";
+let baseURL = "https://www.okx.com";
 const prePath = "/api/v5/";
 
 export interface FailRes {
@@ -20,16 +20,13 @@ export interface SuccRes<T> {
 
 export type Res<T> = FailRes | SuccRes<T>;
 
-const base = ky.create({
-  prefixUrl: baseURL + prePath,
-});
-
 // 定义 API 凭证和项目 ID
 export interface APIConfig {
   apiKey: string;
   apiSecret: string;
   apiPass: string;
   projectID: string;
+  domain?: string;
 }
 
 function preHash(
@@ -84,6 +81,14 @@ export interface PostEndpoint {
 }
 
 export const OKXClient = (apiConfig: APIConfig) => {
+  if (apiConfig.domain) {
+    baseURL = baseURL.replace("www.okx.com", apiConfig.domain)
+  }
+  
+  const base = ky.create({
+    prefixUrl: baseURL + prePath,
+  });
+
   async function sendGetRequest<T>(requestPath: string, params: any) {
     // 生成签名
     const { signature, timestamp } = createSignature(
