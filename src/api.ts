@@ -688,7 +688,7 @@ const WebhookSub = z.object({
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-webhook-unsubscribe
 const WebhookUnsub = z.object({
   endpoint: z.literal("wallet/webhook/unsubscribe"),
-  method: z.literal("GET"),
+  method: z.literal("POST"),
   params: z.array(webhookId).min(1).max(20),
   response: z.array(webhookId),
 });

@@ -8,14 +8,19 @@ const client = SDK({
   projectID,
 });
 
-console.log(
-  await client({
-    endpoint: "wallet/chain/supported-chains",
-  })
-);
+// console.log(
+//   await client({
+//     endpoint: "wallet/chain/supported-chains",
+//   })
+// );
 
 console.log(
   await client({
-    endpoint: "wallet/webhook/subscriptions",
+    endpoint: "wallet/webhook/unsubscribe",
+    params: [
+      {
+        id: "200204",
+      },
+    ],
   })
 );
