@@ -1,69 +1,5 @@
 import { z } from "zod";
 
-// chains ==========================================================================================================
-
-// https://www.okx.com/web3/build/docs/waas/walletapi-resources-supported-networks
-export enum Chain {
-  "BTC" = "0",
-  "Ethereum" = "1",
-  "Litecoin" = "2",
-  "Dogecoin" = "3",
-  "Dash" = "5",
-  "Optimism" = "10",
-  "Flare" = "14",
-  "Cronos" = "25",
-  "BNB Smart Chain" = "56",
-  "Ethereum Classic" = "61",
-  "OKTC" = "66",
-  "Gnosis" = "100",
-  "Polygon" = "137",
-  "Bitcoin Cash" = "145",
-  "Manta Pacific" = "169",
-  "Tron" = "195",
-  "X layer" = "196",
-  "opBNB" = "204",
-  "B^2 network" = "223",
-  "Fantom" = "250",
-  "Kroma" = "255",
-  "KCC" = "321",
-  "zkSync Era" = "324",
-  "PulseChain" = "369",
-  "Omega Network" = "408",
-  "Endurance" = "648",
-  "Conflux" = "1030",
-  "Metis" = "1088",
-  "Polygon zkEVM" = "1101",
-  "Core" = "1116",
-  "Moonbeam" = "1284",
-  "Moonriver" = "1285",
-  "Ronin" = "2020",
-  "Rangers" = "2025",
-  "Kava EVM" = "2222",
-  "Merlin Chain" = "4200",
-  "Mantle" = "5000",
-  "Base" = "8453",
-  "Immutable zkEVM" = "13371",
-  "MODE_ETH" = "34443",
-  "Arbitrum One" = "42161",
-  "Arbitrum Nova" = "42170",
-  "Celo" = "42220",
-  "Avalanche C" = "43114",
-  "Linea" = "59144",
-  "Kaia network (Klaytn)" = "8217",
-  "Blast" = "81457",
-  "Chilizi" = "88888",
-  "EthereumPoW" = "10001",
-  "TAIKO_ETH" = "167000",
-  "BITLAYER_BTC" = "200901",
-  "Ethereum Fair(DIS chain)" = "513100",
-  "BOB_ETH" = "60808",
-  "Scroll" = "534352",
-  "Sepolia" = "11155111",
-  "Fractal Bitcoin Mainnet" = "70000061",
-  "Solana" = "501",
-  "SUI" = "784",
-}
-
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-get-supported-blockchain
 const SupportedChains = z.object({
   endpoint: z.literal("wallet/chain/supported-chains"),
@@ -74,7 +10,7 @@ const SupportedChains = z.object({
       name: z.string(),
       logoUrl: z.string(),
       shortName: z.string(),
-      chainIndex: z.nativeEnum(Chain),
+      chainIndex: z.string(),
     })
   ),
 });
@@ -91,7 +27,7 @@ const CurrentPrice = z.object({
   params: z
     .array(
       z.object({
-        chainIndex: z.nativeEnum(Chain),
+        chainIndex: z.string(),
         tokenAddress: TokenAddress,
       })
     )
@@ -101,7 +37,7 @@ const CurrentPrice = z.object({
     z.object({
       price: z.string(),
       time: z.string(),
-      chainIndex: z.nativeEnum(Chain),
+      chainIndex: z.string(),
       tokenAddress: TokenAddress,
     })
   ),
@@ -112,7 +48,7 @@ const TokenDetail = z.object({
   endpoint: z.literal("wallet/token/token-detail"),
   method: z.literal("GET"),
   params: z.object({
-    chainIndex: z.nativeEnum(Chain),
+    chainIndex: z.string(),
     tokenAddress: TokenAddress,
   }),
   response: z.array(
@@ -120,7 +56,7 @@ const TokenDetail = z.object({
       logoUrl: z.string().url(),
       officialWebsite: z.string().url(),
       tokenAddress: TokenAddress,
-      chainIndex: z.nativeEnum(Chain),
+      chainIndex: z.string(),
       chainName: z.string(),
       symbol: z.string(),
       maxSupply: z.string(),
@@ -146,7 +82,7 @@ const HistoricalPrice = z.object({
   endpoint: z.literal("wallet/token/historical-price"),
   method: z.literal("GET"),
   params: z.object({
-    chainIndex: z.nativeEnum(Chain),
+    chainIndex: z.string(),
     tokenAddress: TokenAddress.optional(),
     limit: z.number().max(200).optional(),
     cursor: z.number().optional(),
@@ -175,7 +111,7 @@ const AddressTokenBalances = z.object({
     address: z.string(),
     tokenAddresses: z.array(
       z.object({
-        chainIndex: z.nativeEnum(Chain),
+        chainIndex: z.string(),
         tokenAddress: TokenAddress,
       })
     ),
@@ -186,7 +122,7 @@ const AddressTokenBalances = z.object({
       z.object({
         tokenAssets: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             tokenAddress: TokenAddress,
             symbol: z.string(),
             balance: z.string(),
@@ -227,7 +163,7 @@ const Utxos = z.object({
   method: z.literal("GET"),
   params: z.object({
     address: z.string(),
-    chainIndex: z.nativeEnum(Chain),
+    chainIndex: z.string(),
     cursor: z.string().optional(),
     limit: z.number().max(100).optional(),
   }),
@@ -254,7 +190,7 @@ const UtxosDetail = z.object({
   method: z.literal("GET"),
   params: z.object({
     txHash: z.string(),
-    chainIndex: z.nativeEnum(Chain),
+    chainIndex: z.string(),
     voutIndex: z.string(),
   }),
   response: z
@@ -301,7 +237,7 @@ const AddressAllToken = z.object({
       z.object({
         tokenAssets: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             tokenAddress: z.string(),
             symbol: z.string(),
             balance: z.string(),
@@ -325,7 +261,7 @@ const Approvals = z.object({
     addresses: z
       .array(
         z.object({
-          chainIndex: z.nativeEnum(Chain),
+          chainIndex: z.string(),
           address: z.string(),
         })
       )
@@ -336,7 +272,7 @@ const Approvals = z.object({
   response: z
     .array(
       z.object({
-        chainIndex: z.nativeEnum(Chain),
+        chainIndex: z.string(),
         cursor: z.string(),
         approvalProjects: z.array(
           z.object({
@@ -395,7 +331,7 @@ const WalletAllToken = z.object({
         timeStamp: z.string(),
         tokenAssets: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             tokenAddress: TokenAddress,
             address: z.string(),
             symbol: z.string(),
@@ -418,7 +354,7 @@ const TokenBalances = z.object({
     accountId: z.string(),
     tokenAddresses: z.array(
       z.object({
-        chainIndex: z.nativeEnum(Chain),
+        chainIndex: z.string(),
         tokenAddress: TokenAddress,
       })
     ),
@@ -428,7 +364,7 @@ const TokenBalances = z.object({
       z.object({
         tokenAssets: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             tokenAddress: TokenAddress,
             symbol: z.string(),
             balance: z.string(),
@@ -461,7 +397,7 @@ const AddressTransactions = z.object({
         cursor: z.string(),
         transactionList: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             txHash: z.string(),
             iType: z.enum(["1", "0", "2"]),
             methodId: z.string(),
@@ -499,7 +435,7 @@ const Transactions = z.object({
   method: z.literal("GET"),
   params: z.object({
     accountId: z.string(),
-    chainIndex: z.nativeEnum(Chain).optional(),
+    chainIndex: z.string().optional(),
     tokenAddress: TokenAddress.optional(),
     limit: z.number().max(200).optional(),
     cursor: z.number().optional(),
@@ -512,7 +448,7 @@ const Transactions = z.object({
         cursor: z.string(),
         transactionList: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             txHash: z.string(),
             iType: z.enum(["1", "0", "2"]),
             methodId: z.string(),
@@ -549,7 +485,7 @@ const TransactionsDetail = z.object({
   endpoint: z.literal("wallet/post-transaction/transaction-detail-by-txhash"),
   method: z.literal("GET"),
   params: z.object({
-    chainIndex: z.nativeEnum(Chain),
+    chainIndex: z.string(),
     txHash: z.string(),
     iType: z.enum(["0", "1", "2"]).optional(),
   }),
@@ -559,7 +495,7 @@ const TransactionsDetail = z.object({
         cursor: z.string(),
         transactionList: z.array(
           z.object({
-            chainIndex: z.nativeEnum(Chain),
+            chainIndex: z.string(),
             height: z.string(),
             txTime: z.string(),
             txHash: z.string(),
@@ -626,7 +562,7 @@ const InscriptionTransactionsDetail = z.object({
   method: z.literal("GET"),
   params: z.object({
     txHash: z.string(),
-    chainIndex: z.nativeEnum(Chain).optional(),
+    chainIndex: z.string().optional(),
     protocol: z.enum(["1", "2", "3", "4", "5"]).optional(),
     limit: z.number().max(100).optional(),
     cursor: z.number().optional(),
@@ -663,7 +599,7 @@ const InscriptionTransactionsDetail = z.object({
 const webhookDetail = z.object({
   url: z.string().url(),
   type: z.enum(["transaction", "block", "token_issuance", "fee_fluctuation"]),
-  chainIndex: z.nativeEnum(Chain),
+  chainIndex: z.string(),
   name: z.string().optional(),
   feeChangeFilter: z
     .object({
@@ -710,7 +646,7 @@ const CreateWallet = z.object({
   params: z.object({
     addresses: z.array(
       z.object({
-        chainIndex: z.nativeEnum(Chain),
+        chainIndex: z.string(),
         address: z.string(),
       })
     ),
@@ -731,7 +667,7 @@ const UpdateWallet = z.object({
     updateType: z.enum(["add", "delete"]),
     addresses: z.array(
       z.object({
-        chainIndex: z.nativeEnum(Chain),
+        chainIndex: z.string(),
         address: z.string(),
       })
     ),
