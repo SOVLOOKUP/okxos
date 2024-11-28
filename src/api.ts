@@ -690,7 +690,7 @@ const WebhookUnsub = z.object({
   endpoint: z.literal("wallet/webhook/unsubscribe"),
   method: z.literal("POST"),
   params: z.array(webhookId).min(1).max(20),
-  response: z.array(webhookId),
+  response: z.array(webhookId.extend({ id: z.string() })),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-webhook-get-subscriptions
@@ -698,7 +698,7 @@ const WebhookQuerySub = z.object({
   endpoint: z.literal("wallet/webhook/subscriptions"),
   method: z.literal("GET"),
   params: z.object({}).optional(),
-  response: z.array(webhookDetail),
+  response: z.array(webhookDetail.extend({ id: z.string() })),
 });
 
 // wallet ==========================================================================================================
@@ -753,10 +753,12 @@ const DeleteWallet = z.object({
 const Accounts = z.object({
   endpoint: z.literal("wallet/account/accounts"),
   method: z.literal("GET"),
-  params: z.object({
-    limit: z.string().optional(),
-    cursor: z.string().optional(),
-  }).optional(),
+  params: z
+    .object({
+      limit: z.string().optional(),
+      cursor: z.string().optional(),
+    })
+    .optional(),
   response: z
     .array(
       z.object({
@@ -802,15 +804,17 @@ const AccountDetail = z.object({
 const Orders = z.object({
   endpoint: z.literal("wallet/post-transaction/orders"),
   method: z.literal("GET"),
-  params: z.object({
-    address: z.string().optional(),
-    accountId: z.string().optional(),
-    chainIndex: z.string().optional(),
-    txStatus: z.enum(["1", "2", "3"]).optional(),
-    orderId: z.string().optional(),
-    cursor: z.string().optional(),
-    limit: z.number().max(100).optional(),
-  }).optional(),
+  params: z
+    .object({
+      address: z.string().optional(),
+      accountId: z.string().optional(),
+      chainIndex: z.string().optional(),
+      txStatus: z.enum(["1", "2", "3"]).optional(),
+      orderId: z.string().optional(),
+      cursor: z.string().optional(),
+      limit: z.number().max(100).optional(),
+    })
+    .optional(),
   response: z.array(
     z.object({
       chainIndex: z.string(),
@@ -849,13 +853,15 @@ const ValidateAddress = z.object({
     chainIndex: z.string(),
     address: z.string(),
   }),
-  response: z.array(
-    z.object({
-      addressType: z.enum(["0", "1", "2"]),
-      hitBlacklist: z.boolean(),
-      tag: z.string(),
-    })
-  ).length(1),
+  response: z
+    .array(
+      z.object({
+        addressType: z.enum(["0", "1", "2"]),
+        hitBlacklist: z.boolean(),
+        tag: z.string(),
+      })
+    )
+    .length(1),
 });
 
 // ==========================================================================================================
@@ -920,7 +926,7 @@ export {
   WebhookUnsub,
   WebhookQuerySub,
   ValidateAddress,
-}
+};
 
 const allInput = all.map((i) => i.pick({ endpoint: true, params: true }));
 export const api = z.discriminatedUnion("endpoint", [all.pop()!, ...all]);
