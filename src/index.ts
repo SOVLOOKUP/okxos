@@ -29,4 +29,6 @@ export const SDK = (apiConfig: APIConfig) => {
   };
 };
 
+export * from "./okxadmin"
+
 // console.log(Object.keys(em).sort())
