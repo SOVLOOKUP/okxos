@@ -1,8 +1,7 @@
 import ky, { SearchParamsOption } from "ky";
-import * as crypto from "@originjs/crypto-js-wasm"
+import * as crypto from "crypto-js"
 import { stringify } from "qs";
-const { HmacSHA256, SHA256, enc } = crypto["default"] as typeof crypto;
-await SHA256.loadWasm();
+const { HmacSHA256, enc } = crypto["default"] as typeof crypto;
 
 let baseURL = "https://www.okx.com";
 const prePath = "/api/v5/";

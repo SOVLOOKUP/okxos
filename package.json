@@ -1,6 +1,6 @@
 {
   "name": "okxos",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "okxos SDK",
   "homepage": "https://www.okx.com/web3/build/docs/waas/okx-waas-what-is-waas",
   "repository": {
@@ -22,12 +22,13 @@
     "zod": "^3.23.8"
   },
   "dependencies": {
-    "@originjs/crypto-js-wasm": "^1.1.1",
+    "crypto-js": "^4.2.0",
     "ethers": "^6.13.4",
     "ky": "^1.7.3",
     "qs": "^6.13.1"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/qs": "^6.9.17",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
