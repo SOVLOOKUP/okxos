@@ -11,8 +11,8 @@ api._def.options.map((i) => {
 });
 
 type APIWithRes = z.infer<typeof api>;
-type API = z.infer<typeof apiInput>;
-type GetRes<T extends API["endpoint"]> = (APIWithRes & {
+export type API = z.infer<typeof apiInput>;
+export type GetRes<T extends API["endpoint"]> = (APIWithRes & {
   endpoint: T;
 })["response"];
 
