@@ -135,7 +135,6 @@ const AddressTokenBalances = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-total-token-value-address
@@ -154,7 +153,6 @@ const AddressTotalValue = z.object({
         totalValue: z.string(),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-utxos
@@ -181,7 +179,6 @@ const Utxos = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-utxo-detail
@@ -220,7 +217,6 @@ const UtxosDetail = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-all-token-balances-by-address
@@ -250,7 +246,6 @@ const AddressAllToken = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-get-approval-detail
@@ -292,7 +287,6 @@ const Approvals = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // account value ==========================================================================================================
@@ -313,7 +307,6 @@ const TotalValue = z.object({
         totalValue: z.string(),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-wallet-all-token-balances
@@ -343,7 +336,6 @@ const WalletAllToken = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-token-balances
@@ -375,7 +367,6 @@ const TokenBalances = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // tx history ==========================================================================================================
@@ -425,8 +416,7 @@ const AddressTransactions = z.object({
           })
         ),
       })
-    )
-    .length(1),
+    ),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-transaction-list
@@ -476,8 +466,7 @@ const Transactions = z.object({
           })
         ),
       })
-    )
-    .length(1),
+    ),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-transaction-detail-by-txhash
@@ -551,7 +540,6 @@ const TransactionsDetail = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-inscription-transaction-detail-by-txhash
@@ -591,7 +579,6 @@ const InscriptionTransactionsDetail = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // webhook ==========================================================================================================
@@ -707,7 +694,6 @@ const Accounts = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-account-detail
@@ -733,7 +719,6 @@ const AccountDetail = z.object({
         ),
       })
     )
-    .length(1),
 });
 
 // https://www.okx.com/web3/build/docs/waas/walletapi-api-order-id-transaction-list
@@ -797,7 +782,6 @@ const ValidateAddress = z.object({
         tag: z.string(),
       })
     )
-    .length(1),
 });
 
 // ==========================================================================================================
