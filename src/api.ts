@@ -399,7 +399,7 @@ const AddressTransactions = z.object({
           z.object({
             chainIndex: z.string(),
             txHash: z.string(),
-            iType: z.enum(["1", "0", "2"]),
+            itype: z.enum(["1", "0", "2"]),
             methodId: z.string(),
             nonce: z.string(),
             txTime: z.string(),
@@ -450,7 +450,7 @@ const Transactions = z.object({
           z.object({
             chainIndex: z.string(),
             txHash: z.string(),
-            iType: z.enum(["1", "0", "2"]),
+            itype: z.enum(["1", "0", "2"]),
             methodId: z.string(),
             nonce: z.string(),
             txTime: z.string(),
@@ -487,7 +487,7 @@ const TransactionsDetail = z.object({
   params: z.object({
     chainIndex: z.string(),
     txHash: z.string(),
-    iType: z.enum(["0", "1", "2"]).optional(),
+    itype: z.enum(["0", "1", "2"]).optional(),
   }),
   response: z
     .array(
