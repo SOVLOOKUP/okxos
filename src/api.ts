@@ -85,7 +85,7 @@ const HistoricalPrice = z.object({
     chainIndex: z.string(),
     tokenAddress: TokenAddress.optional(),
     limit: z.number().max(200).optional(),
-    cursor: z.number().optional(),
+    cursor: z.string().optional(),
     begin: z.string().optional(),
     end: z.string().optional(),
     period: z.enum(["1m", "5m", "30m", "1h", "1d"]).optional(),
@@ -438,7 +438,7 @@ const Transactions = z.object({
     chainIndex: z.string().optional(),
     tokenAddress: TokenAddress.optional(),
     limit: z.number().max(200).optional(),
-    cursor: z.number().optional(),
+    cursor: z.string().optional(),
     begin: z.string().optional(),
     end: z.string().optional(),
   }),
@@ -565,7 +565,7 @@ const InscriptionTransactionsDetail = z.object({
     chainIndex: z.string().optional(),
     protocol: z.enum(["1", "2", "3", "4", "5"]).optional(),
     limit: z.number().max(100).optional(),
-    cursor: z.number().optional(),
+    cursor: z.string().optional(),
   }),
   response: z
     .array(
