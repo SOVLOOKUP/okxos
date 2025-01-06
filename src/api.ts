@@ -492,63 +492,58 @@ const TransactionsDetail = z.object({
   response: z
     .array(
       z.object({
-        cursor: z.string(),
-        transactionList: z.array(
+        chainIndex: z.string(),
+        height: z.string(),
+        txTime: z.string(),
+        txHash: z.string(),
+        txStatus: z.enum(["success", "fail", "pending"]),
+        gasLimit: z.string(),
+        gasUsed: z.string(),
+        gasPrice: z.string(),
+        nonce: z.string(),
+        amount: z.string(),
+        symbol: z.string(),
+        methodId: z.string(),
+        fromDetails: z.array(
           z.object({
-            chainIndex: z.string(),
-            height: z.string(),
-            txTime: z.string(),
-            txHash: z.string(),
-            txStatus: z.enum(["success", "fail", "pending"]),
-            gasLimit: z.string(),
-            gasUsed: z.string(),
-            gasPrice: z.string(),
-            nonce: z.string(),
+            address: z.string(),
+            vinIndex: z.string(),
+            preVoutIndex: z.string(),
+            txhash: z.string(),
+            isContract: z.boolean(),
             amount: z.string(),
-            symbol: z.string(),
-            methodId: z.string(),
-            fromDetails: z.array(
-              z.object({
-                address: z.string(),
-                vinIndex: z.string(),
-                preVoutIndex: z.string(),
-                txhash: z.string(),
-                isContract: z.boolean(),
-                amount: z.string(),
-              })
-            ),
-            toDetails: z.array(
-              z.object({
-                address: z.string(),
-                voutIndex: z.string(),
-                isContract: z.boolean(),
-                amount: z.string(),
-              })
-            ),
-            internalTransactionDetails: z.array(
-              z.object({
-                from: z.string(),
-                to: z.string(),
-                isFromContract: z.boolean(),
-                isToContract: z.boolean(),
-                amount: z.string(),
-                txStatus: z.string(),
-              })
-            ),
-            tokenTransferDetails: z.array(
-              z.object({
-                from: z.string(),
-                to: z.string(),
-                isFromContract: z.boolean(),
-                isToContract: z.boolean(),
-                tokenContractAddress: z.string(),
-                symbol: z.string(),
-                amount: z.string(),
-              })
-            ),
-            l1OriginHash: z.string(),
           })
         ),
+        toDetails: z.array(
+          z.object({
+            address: z.string(),
+            voutIndex: z.string(),
+            isContract: z.boolean(),
+            amount: z.string(),
+          })
+        ),
+        internalTransactionDetails: z.array(
+          z.object({
+            from: z.string(),
+            to: z.string(),
+            isFromContract: z.boolean(),
+            isToContract: z.boolean(),
+            amount: z.string(),
+            txStatus: z.string(),
+          })
+        ),
+        tokenTransferDetails: z.array(
+          z.object({
+            from: z.string(),
+            to: z.string(),
+            isFromContract: z.boolean(),
+            isToContract: z.boolean(),
+            tokenContractAddress: z.string(),
+            symbol: z.string(),
+            amount: z.string(),
+          })
+        ),
+        l1OriginHash: z.string(),
       })
     )
     .length(1),
