@@ -386,6 +386,7 @@ const AddressTransactions = z.object({
   params: z.object({
     address: z.string(),
     chains: z.string(),
+    tokenAddress: z.string().optional(),
     begin: z.string().optional(),
     end: z.string().optional(),
     cursor: z.string().optional(),
